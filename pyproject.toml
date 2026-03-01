@@ -1,0 +1,88 @@
+[project]
+name = "japan-finance-events"
+version = "0.1.0"
+description = "Event-driven corporate event dataset for Japanese financial data with Point-in-time support"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+keywords = [
+    "japan", "finance", "events", "corporate-actions", "point-in-time",
+    "backtesting", "edinet", "tdnet",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+tdnet = ["tdnet-disclosure-mcp>=0.1.0"]
+edinet = ["edinet-mcp>=0.6.3"]
+codes = ["japan-finance-codes>=0.1.1"]
+all = [
+    "tdnet-disclosure-mcp>=0.1.0",
+    "edinet-mcp>=0.6.3",
+    "japan-finance-codes>=0.1.1",
+]
+dev = [
+    "tdnet-disclosure-mcp>=0.1.0",
+    "edinet-mcp>=0.6.3",
+    "japan-finance-codes>=0.1.1",
+    "pytest>=9.0",
+    "pytest-asyncio>=1.3",
+    "mypy>=1.0",
+    "ruff>=0.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+exclude = [".env", ".env.*", ".claude/"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/japan_finance_events"]
+
+[tool.uv.sources]
+tdnet-disclosure-mcp = { path = "../tdnet-disclosure-mcp", editable = true }
+edinet-mcp = { path = "../edinet-mcp", editable = true }
+japan-finance-codes = { path = "../japan-finance-codes", editable = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 99
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "TCH", "RUF"]
+ignore = ["RUF001"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["japan_finance_events"]
+
+[tool.mypy]
+strict = true
+packages = ["japan_finance_events"]
+mypy_path = ["src"]
+
+[[tool.mypy.overrides]]
+module = [
+    "tdnet_disclosure_mcp", "tdnet_disclosure_mcp.*",
+    "edinet_mcp", "edinet_mcp.*",
+    "japan_finance_codes", "japan_finance_codes.*",
+]
+ignore_missing_imports = true
