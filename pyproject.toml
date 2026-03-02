@@ -39,6 +39,7 @@ dev = [
     "edinet-mcp>=0.6.3",
     "japan-finance-codes>=0.1.1",
     "pytest>=9.0",
+    "pytest-cov>=6.0",
     "pytest-asyncio>=1.3",
     "mypy>=1.0",
     "ruff>=0.4",
