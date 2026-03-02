@@ -81,10 +81,12 @@ class TestStore:
         assert results[0].event_type == EventType.DIVIDEND_CHANGE
 
     def test_iter_pit(self, store: EventStore) -> None:
-        events = list(store.iter_pit(
-            start=datetime(2026, 2, 1),
-            end=datetime(2026, 2, 28),
-        ))
+        events = list(
+            store.iter_pit(
+                start=datetime(2026, 2, 1),
+                end=datetime(2026, 2, 28),
+            )
+        )
         assert len(events) == 2
 
     def test_sorted_by_pit(self, store: EventStore) -> None:

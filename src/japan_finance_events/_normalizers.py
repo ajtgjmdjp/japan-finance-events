@@ -59,7 +59,7 @@ _EDINET_DOCTYPE_MAP: dict[str, EventType] = {
     "120": EventType.EARNINGS,  # 有価証券報告書 (annual)
     "140": EventType.EARNINGS,  # 四半期報告書
     "160": EventType.EARNINGS,  # 半期報告書
-    "180": EventType.OTHER,     # 臨時報告書
+    "180": EventType.OTHER,  # 臨時報告書
 }
 
 

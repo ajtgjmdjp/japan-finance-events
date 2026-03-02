@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 from datetime import datetime
-from typing import Iterator
 
 from japan_finance_events._models import Event, EventType
 
@@ -67,14 +67,16 @@ class EventStore:
         Returns:
             Events matching filters, sorted by pit_published_at.
         """
-        return list(self._iter_filtered(
-            as_of=as_of,
-            company=company,
-            event_types=event_types,
-            start=start,
-            end=end,
-            limit=limit,
-        ))
+        return list(
+            self._iter_filtered(
+                as_of=as_of,
+                company=company,
+                event_types=event_types,
+                start=start,
+                end=end,
+                limit=limit,
+            )
+        )
 
     def iter_pit(
         self,

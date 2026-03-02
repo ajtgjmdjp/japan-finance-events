@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, date
+from datetime import date, datetime
 
 from japan_finance_events import Direction, Event, EventType, SourceRef, SourceType
 from japan_finance_events._dedupe import dedupe_score, deduplicate, merge_events

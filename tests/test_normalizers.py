@@ -13,41 +13,44 @@ from japan_finance_events import (
 
 class TestClassifyDirection:
     def test_upward_revision(self) -> None:
-        assert classify_direction(
-            "業績予想の上方修正に関するお知らせ", EventType.FORECAST_REVISION
-        ) == Direction.UP
+        assert (
+            classify_direction("業績予想の上方修正に関するお知らせ", EventType.FORECAST_REVISION)
+            == Direction.UP
+        )
 
     def test_downward_revision(self) -> None:
-        assert classify_direction(
-            "通期業績予想の下方修正に関するお知らせ", EventType.FORECAST_REVISION
-        ) == Direction.DOWN
+        assert (
+            classify_direction(
+                "通期業績予想の下方修正に関するお知らせ", EventType.FORECAST_REVISION
+            )
+            == Direction.DOWN
+        )
 
     def test_dividend_increase(self) -> None:
-        assert classify_direction(
-            "増配に関するお知らせ", EventType.DIVIDEND_CHANGE
-        ) == Direction.UP
+        assert (
+            classify_direction("増配に関するお知らせ", EventType.DIVIDEND_CHANGE) == Direction.UP
+        )
 
     def test_dividend_decrease(self) -> None:
-        assert classify_direction(
-            "減配に関するお知らせ", EventType.DIVIDEND_CHANGE
-        ) == Direction.DOWN
+        assert (
+            classify_direction("減配に関するお知らせ", EventType.DIVIDEND_CHANGE) == Direction.DOWN
+        )
 
     def test_no_dividend(self) -> None:
-        assert classify_direction(
-            "無配に関するお知らせ", EventType.DIVIDEND_CHANGE
-        ) == Direction.DOWN
+        assert (
+            classify_direction("無配に関するお知らせ", EventType.DIVIDEND_CHANGE) == Direction.DOWN
+        )
 
     def test_earnings_always_unknown(self) -> None:
         """Direction is only classified for revisions and dividends."""
-        assert classify_direction(
-            "上方修正", EventType.EARNINGS
-        ) == Direction.UNKNOWN
+        assert classify_direction("上方修正", EventType.EARNINGS) == Direction.UNKNOWN
 
     def test_neutral_revision(self) -> None:
         """No keyword match → UNKNOWN."""
-        assert classify_direction(
-            "業績予想の修正に関するお知らせ", EventType.FORECAST_REVISION
-        ) == Direction.UNKNOWN
+        assert (
+            classify_direction("業績予想の修正に関するお知らせ", EventType.FORECAST_REVISION)
+            == Direction.UNKNOWN
+        )
 
 
 class TestFromTdnetDisclosure:

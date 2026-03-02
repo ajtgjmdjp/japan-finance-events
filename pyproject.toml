@@ -49,15 +49,10 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.sdist]
-exclude = [".env", ".env.*", ".claude/"]
+exclude = [".env", ".env.*", ".claude/", ".github/"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/japan_finance_events"]
-
-[tool.uv.sources]
-tdnet-disclosure-mcp = { path = "../tdnet-disclosure-mcp", editable = true }
-edinet-mcp = { path = "../edinet-mcp", editable = true }
-japan-finance-codes = { path = "../japan-finance-codes", editable = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -68,13 +63,14 @@ target-version = "py310"
 line-length = 99
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM", "TCH", "RUF"]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 ignore = ["RUF001"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["japan_finance_events"]
 
 [tool.mypy]
+python_version = "3.10"
 strict = true
 packages = ["japan_finance_events"]
 mypy_path = ["src"]

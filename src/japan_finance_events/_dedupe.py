@@ -9,7 +9,6 @@ from __future__ import annotations
 
 from japan_finance_events._models import Event, SourceRef
 
-
 _MERGE_THRESHOLD = 0.75
 
 
@@ -21,9 +20,9 @@ def dedupe_score(a: Event, b: Event) -> float:
     score = 0.0
 
     # Same company (by ticker or EDINET code)
-    if a.company_ticker and a.company_ticker == b.company_ticker:
-        score += 0.35
-    elif a.edinet_code and a.edinet_code == b.edinet_code:
+    same_ticker = a.company_ticker and a.company_ticker == b.company_ticker
+    same_edinet = a.edinet_code and a.edinet_code == b.edinet_code
+    if same_ticker or same_edinet:
         score += 0.35
 
     # Same event type
@@ -31,10 +30,7 @@ def dedupe_score(a: Event, b: Event) -> float:
         score += 0.25
 
     # Same fiscal period
-    if (
-        a.fiscal_period_end is not None
-        and a.fiscal_period_end == b.fiscal_period_end
-    ):
+    if a.fiscal_period_end is not None and a.fiscal_period_end == b.fiscal_period_end:
         score += 0.20
 
     # Close publication dates (within 48 hours)
@@ -61,7 +57,9 @@ def merge_events(primary: Event, secondary: Event) -> Event:
     return Event(
         event_id=primary.event_id,
         event_type=primary.event_type,
-        direction=primary.direction if primary.direction.value != "unknown" else secondary.direction,
+        direction=(
+            primary.direction if primary.direction.value != "unknown" else secondary.direction
+        ),
         company_ticker=primary.company_ticker or secondary.company_ticker,
         edinet_code=primary.edinet_code or secondary.edinet_code,
         company_name=primary.company_name or secondary.company_name,
