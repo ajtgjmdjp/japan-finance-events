@@ -1,5 +1,8 @@
 # japan-finance-events
 
+> **Status: Maintenance mode** — This project is stable and functional but not actively developed. Issues and PRs are welcome.
+
+
 Event-driven corporate event dataset for Japanese financial data with Point-in-time (PIT) support.
 
 ## Features
